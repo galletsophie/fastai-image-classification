@@ -30,7 +30,5 @@ def predict():
 # route for prediction
 @app.route('/predict', methods=['POST'])
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()
