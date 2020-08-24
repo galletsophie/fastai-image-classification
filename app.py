@@ -1,12 +1,8 @@
 from flask import Flask, request, jsonify
-from fastai.vision import (
-    ImageDataBunch,
-    ConvLearner,
-    open_image,
-    get_transforms,
-    models,
-)
-from flask_cors import CORS,cross_origin
+from fastai.basic_train import load_learner
+from fastai.vision import open_image
+from flask_cors import CORS, cross_origin
+
 app = Flask(__name__)
 CORS(app, support_credentials=True)
 
@@ -24,11 +20,10 @@ def predict_single(img_file):
         'probs': {c: round(float(probs_list[i]), 5) for (i, c) in enumerate(classes)}
     }
 
-def predict():
-    return jsonify(predict_single(request.files['image']))
-
 # route for prediction
-@app.route('/predict', methods=['POST'])
+@app.route("/predict", methods=["POST"])
+def predict():
+    return jsonify(predict_single(request.files["image"]))
 
 if __name__ == "__main__":
     app.run()
